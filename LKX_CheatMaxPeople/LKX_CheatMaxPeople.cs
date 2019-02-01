@@ -9,27 +9,27 @@ using UnityModManagerNet;
 using UnityEngine;
 
 /// <summary>
-/// 作弊用的mod
+/// Filthy Cheater mod
 /// </summary>
 namespace LKX_CheatMaxPeople
 {
     /// <summary>
-    /// 设置文件
+    /// Settings
     /// </summary>
     public class Settings : UnityModManager.ModSettings
     {
         /// <summary>
-        /// 人口
+        /// Population
         /// </summary>
         public int maxPeople;
 
         /// <summary>
-        /// 蛐蛐时节开启
+        /// Cricket (Hunting) Season
         /// </summary>
         public bool ququLife;
 
         /// <summary>
-        /// 食物合并作弊
+        /// Food Merger
         /// </summary>
         public bool foodMerge;
 
@@ -42,7 +42,7 @@ namespace LKX_CheatMaxPeople
         public int eventId;
 
         /// <summary>
-        /// 保存设置
+        /// Save Settings
         /// </summary>
         /// <param name="modEntry"></param>
         public override void Save(UnityModManager.ModEntry modEntry)
@@ -54,17 +54,17 @@ namespace LKX_CheatMaxPeople
     public class Main
     {
         /// <summary>
-        /// umm日志
+        /// UMM Log
         /// </summary>
         public static UnityModManager.ModEntry.ModLogger logger;
 
         /// <summary>
-        /// mod设置
+        /// Mod Setting
         /// </summary>
         public static Settings settings;
 
         /// <summary>
-        /// 是否开启mod
+        /// Open or not (?)
         /// </summary>
         public static bool enabled;
 
@@ -77,7 +77,7 @@ namespace LKX_CheatMaxPeople
         public static int selectActorId;
 
         /// <summary>
-        /// 载入mod。
+        /// Loading mod。
         /// </summary>
         /// <param name="modEntry">mod管理器对象</param>
         /// <returns></returns>
@@ -96,7 +96,7 @@ namespace LKX_CheatMaxPeople
         }
 
         /// <summary>
-        /// 确定是否激活mod
+        /// Check if should be activated
         /// </summary>
         /// <param name="modEntry">umm</param>
         /// <param name="value">是否激活</param>
@@ -107,14 +107,14 @@ namespace LKX_CheatMaxPeople
         }
 
         /// <summary>
-        /// 展示mod的设置
+        /// Show mod settings
         /// </summary>
         /// <param name="modEntry">umm</param>
         static void OnGUI(UnityModManager.ModEntry modEntry)
         {
             GUIStyle redLabelStyle = new GUIStyle();
             redLabelStyle.normal.textColor = new Color(159f / 256f, 20f / 256f, 29f / 256f);
-            GUILayout.Label("修改人力上限！", redLabelStyle);
+            GUILayout.Label("Increase the population！", redLabelStyle);
 
             string maxPeople = GUILayout.TextField(Main.settings.maxPeople.ToString());
             if (GUI.changed)
@@ -124,74 +124,74 @@ namespace LKX_CheatMaxPeople
                 Main.settings.maxPeople = int.Parse(maxPeople);
             }
 
-            Main.settings.ququLife = GUILayout.Toggle(Main.settings.ququLife, "蛐蛐无限寿命，已死的不复活。");
-            Main.settings.foodMerge = GUILayout.Toggle(Main.settings.foodMerge, "开启合并食物。");
-            Main.settings.cheatWarehouseMaxSize = GUILayout.Toggle(Main.settings.cheatWarehouseMaxSize, "开启无限仓库容量。");
+            Main.settings.ququLife = GUILayout.Toggle(Main.settings.ququLife, "Immortal crickets，but dead are dead。");
+            Main.settings.foodMerge = GUILayout.Toggle(Main.settings.foodMerge, "Food Merger。");
+            Main.settings.cheatWarehouseMaxSize = GUILayout.Toggle(Main.settings.cheatWarehouseMaxSize, "Infinity warehouse。");
             GUILayout.BeginHorizontal("Box", new GUILayoutOption[0]);
-            Main.SetGUIToToggle(1, "九品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(2, "八品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(3, "七品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(4, "六品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(5, "五品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(6, "四品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(7, "三品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(8, "二品", ref Main.settings.foodLevel);
-            Main.SetGUIToToggle(9, "一品", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(1, "9", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(2, "8", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(3, "7", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(4, "6", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(5, "5", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(6, "4", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(7, "3", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(8, "2", ref Main.settings.foodLevel);
+            Main.SetGUIToToggle(9, "1", ref Main.settings.foodLevel);
             GUILayout.EndHorizontal();
 
             
 
             GUILayout.BeginHorizontal("Box", new GUILayoutOption[0]);
-            if (GUILayout.Button("获取蛐蛐列表"))
+            if (GUILayout.Button("List of crickets"))
             {
                 if (DateFile.instance == null)
                 {
-                    GUILayout.Label("获取失败：未进入存档");
+                    GUILayout.Label("No entry in archive");
                 }
                 else
                 {
                     Main.quQuGuiList = Main.GetQuQuData();
                 }
             }
-            if (GUILayout.Button("修改蛐蛐叫声"))
+            if (GUILayout.Button("Change cricket chirping"))
             {
                 if (DateFile.instance == null)
                 {
-                    GUILayout.Label("修改失败：未进入存档");
+                    GUILayout.Label("Modification failed");
                 }
                 else
                 {
                     Main.TestModValue();
                 }
             }
-            if (GUILayout.Button("恢复全部蛐蛐叫声"))
+            if (GUILayout.Button("Restore cricket chirping"))
             {
                 Main.ResetQuQuData();
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal("Box", new GUILayoutOption[0]);
-            if (GUILayout.Button("列出蛐蛐叫声"))
+            if (GUILayout.Button("Chirpings list"))
             {
                 foreach (KeyValuePair<int, Dictionary<int, string>> jiaosheng in DateFile.instance.cricketDate)
                 {
                     Main.logger.Log(jiaosheng.Key.ToString() + ":{" + jiaosheng.Value[0] + ":" + jiaosheng.Value[9] + "}");
                 }
             }
-            if (GUILayout.Button("蛐蛐buff为1000"))
+            if (GUILayout.Button("+1k Buff for crickets"))
             {
-                Main.logger.Log(DateFile.instance.storyBuffs[-7].ToString() + "前");
+                Main.logger.Log(DateFile.instance.storyBuffs[-7].ToString() + "before");
                 DateFile.instance.storyBuffs[-7] += 1000;
-                Main.logger.Log(DateFile.instance.storyBuffs[-7].ToString() + "后");
+                Main.logger.Log(DateFile.instance.storyBuffs[-7].ToString() + "after");
             }
 
-            if (GUILayout.Button("启动奇遇"))
+            if (GUILayout.Button("Start adventure"))
             {
                 DateFile df = DateFile.instance;
                 df.SetStory(true, df.mianPartId, df.mianPlaceId, Main.settings.eventId);
             }
 
-            if (GUILayout.Button("传剑选人"))
+            if (GUILayout.Button("Sword selection"))
             {
                 foreach (int family in DateFile.instance.actorFamilyDate)
                 {
@@ -199,13 +199,13 @@ namespace LKX_CheatMaxPeople
                 }
             }
 
-            if (GUILayout.Button("测试传剑"))
+            if (GUILayout.Button("Test pass"))
             {
                 ActorMenu.instance.acotrId = Main.selectActorId;
                 ActorMenu.instance.SetNewMianActor();
             }
 
-            if (GUILayout.Button("测试遗惠"))
+            if (GUILayout.Button("Test legacy"))
             {
                 ActorScore.instance.ShowActorScoreWindow(DateFile.instance.mianActorId);
             }
@@ -236,7 +236,7 @@ namespace LKX_CheatMaxPeople
 
             if (Main.quQuGuiList.Count > 0)
             {
-                GUILayout.Label("蛐蛐列表");
+                GUILayout.Label("List of crickets");
                 GUILayout.BeginHorizontal("Box", new GUILayoutOption[0]);
                 int i = 0;
                 foreach (KeyValuePair<int, string> ququ in Main.quQuGuiList)
@@ -258,7 +258,7 @@ namespace LKX_CheatMaxPeople
         }
 
         /// <summary>
-        /// 保存mod的设置
+        /// Save mod settings
         /// </summary>
         /// <param name="modEntry">umm</param>
         static void OnSaveGUI(UnityModManager.ModEntry modEntry)
@@ -303,7 +303,7 @@ namespace LKX_CheatMaxPeople
             }
             else
             {
-                Main.logger.Log("没有选择蛐蛐");
+                Main.logger.Log("No available crickets");
             }
         }
 
@@ -334,7 +334,7 @@ namespace LKX_CheatMaxPeople
             }
             else
             {
-                Main.logger.Log("恢复失败，请重新退出游戏。");
+                Main.logger.Log("Recovery failed, please restart the game。");
             }
         }
     }
@@ -363,7 +363,7 @@ namespace LKX_CheatMaxPeople
         }
 
         /// <summary>
-        /// 处理蛐蛐年龄始终是0
+        /// Current age is always 0 (for cricket)
         /// </summary>
         public static void QuQuCheat()
         {
@@ -389,7 +389,7 @@ namespace LKX_CheatMaxPeople
         }
 
         /// <summary>
-        /// 作弊的合并食物
+        /// Food merge
         /// </summary>
         public static void FoodMergeCheat()
         {
@@ -398,7 +398,7 @@ namespace LKX_CheatMaxPeople
             Dictionary<int, int> itemsId = new Dictionary<int, int>();
             if (!df.actorItemsDate.TryGetValue(df.mianActorId, out itemsId))
             {
-                Main.logger.Log("失败itemsId");
+                Main.logger.Log("Lack of itemsId");
                 return;
             }
 
@@ -413,25 +413,25 @@ namespace LKX_CheatMaxPeople
                 Dictionary<int, string> foodData = new Dictionary<int, string>();
                 if (!df.itemsDate.TryGetValue(itemId, out foodData))
                 {
-                    Main.logger.Log("失败itemId");
+                    Main.logger.Log("Lack of itemId");
                     continue;
                 }
                 
                 CompareFoodsParams(id, foodData, ref foods);
 
-                //删掉这个item
+                //Delete this item
                 df.LoseItem(df.mianActorId, itemId, itemsId[itemId], true);
             }
-            Main.logger.Log("合并了" + foods.Count.ToString());
+            Main.logger.Log("Merged" + foods.Count.ToString());
             if (foods.Count > 0) MakeFoods(foods);
         }
 
         /// <summary>
-        /// 根据id对比食物并合并参数
+        /// Compare foods based on id and combine parameters
         /// </summary>
-        /// <param name="id">食物item的id</param>
-        /// <param name="foodData">对比的当前食物参数</param>
-        /// <param name="foods">需要合并的食物字典</param>
+        /// <param name="id">Food item id</param>
+        /// <param name="foodData">Comparing the parameters of food</param>
+        /// <param name="foods">Need to merge food</param>
         static void CompareFoodsParams(string id, Dictionary<int, string> foodData, ref Dictionary<int, Dictionary<int, string>> foods)
         {
             if (foods.ContainsKey(int.Parse(id)))
@@ -454,9 +454,9 @@ namespace LKX_CheatMaxPeople
         }
 
         /// <summary>
-        /// 创建食物
+        /// Creating food
         /// </summary>
-        /// <param name="foods">合并好的食物字典</param>
+        /// <param name="foods">Merged food list</param>
         static void MakeFoods(Dictionary<int, Dictionary<int, string>> foods)
         {
             DateFile df = DateFile.instance;
@@ -473,7 +473,7 @@ namespace LKX_CheatMaxPeople
     }
 
     /// <summary>
-    /// 把选择的蛐蛐加到可以抓的地方。
+    /// Add the choice of places to catch a cricket。
     /// </summary>
     [HarmonyPatch(typeof(GetQuquWindow), "SetGetQuquWindow")]
     public class LKXTestQUQU_For_GetQuquWindow_SetGetQuquWindow
@@ -491,8 +491,8 @@ namespace LKX_CheatMaxPeople
                 int randomNum1 = UnityEngine.Random.Range(0, Main.settings.ququList.Count - 1);
                 int randomNum2 = UnityEngine.Random.Range(0, Main.settings.ququList.Count - 1);
                 item.Value[1] = Main.settings.ququList[randomNum1];
-                item.Value[2] = Main.settings.ququList[randomNum2];//这条是后缀
-                item.Value[3] = 200;//机率？
+                item.Value[2] = Main.settings.ququList[randomNum2];//This is a suffix
+                item.Value[3] = 200;//Chance？
             }
         }
     }
