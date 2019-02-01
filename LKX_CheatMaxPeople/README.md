@@ -1,5 +1,5 @@
 # LKX_GongFaSizeToOne
-太吾绘卷的mod，给上限和可用的人口再加上自己想加的数值
+The mod is for the Scroll of Taiwu, adds population settings plus the stuff that you guys added.
 # 使用方法
 需要Visual Studio 2017  
 需要Unity3D一堆dll  
